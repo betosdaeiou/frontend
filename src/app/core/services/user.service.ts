@@ -1,6 +1,7 @@
 import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { environment } from '../../../environments/environment';
 
 export interface Rol {
   Id: number;
@@ -18,8 +19,7 @@ export interface Usuario {
   providedIn: 'root'
 })
 export class UserService {
-  // Try to use environment if exists, otherwise fallback to local url.
-  private apiUrl = 'http://127.0.0.1:8000/users';
+  private apiUrl = `${environment.apiUrl}/users`;
   private http = inject(HttpClient);
 
   getUsers(): Observable<Usuario[]> {

@@ -2,6 +2,7 @@ import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, tap, Observable } from 'rxjs';
 import { Router } from '@angular/router';
+import { environment } from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -9,7 +10,7 @@ import { Router } from '@angular/router';
 export class AuthService {
   private http = inject(HttpClient);
   private router = inject(Router);
-  private apiUrl = 'http://127.0.0.1:8000/auth';
+  private apiUrl = `${environment.apiUrl}/auth`;
 
   private currentUserRoleSubject = new BehaviorSubject<string | null>(this.getStoredRole());
   currentUserRole$ = this.currentUserRoleSubject.asObservable();

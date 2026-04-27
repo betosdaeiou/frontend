@@ -51,7 +51,7 @@ export class LoginComponent {
         if (err.status === 401) {
           this.error = "Correo electrónico o contraseña incorrectos.";
         } else {
-          this.error = "No se pudo conectar al servidor. Verifica que el backend esté ejecutándose en http://127.0.0.1:8000.";
+          this.error = "No se pudo conectar al servidor. Inténtalo más tarde.";
         }
       }
     });

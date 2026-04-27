@@ -1,6 +1,7 @@
 import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { environment } from '../../../environments/environment';
 
 export interface PagoOut {
   id: number;
@@ -17,7 +18,7 @@ export interface PagoOut {
 })
 export class PagoService {
   private http = inject(HttpClient);
-  private apiUrl = 'http://127.0.0.1:8000/pagos';
+  private apiUrl = `${environment.apiUrl}/pagos`;
 
   crearCheckoutStripe(incidenteId: number): Observable<{ checkout_url: string }> {
     return this.http.post<{ checkout_url: string }>(`${this.apiUrl}/${incidenteId}/stripe`, {});

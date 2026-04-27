@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
+import { environment } from '../../../../environments/environment';
 
 @Component({
   selector: 'app-forgot-password',
@@ -101,7 +102,7 @@ export class ForgotPasswordComponent {
     this.isLoading = true;
     this.error = null;
 
-    this.http.post<any>('http://127.0.0.1:8000/auth/solicitar-reset', {
+    this.http.post<any>(`${environment.apiUrl}/auth/solicitar-reset`, {
       correo: this.form.value.correo
     }).subscribe({
       next: (res) => {

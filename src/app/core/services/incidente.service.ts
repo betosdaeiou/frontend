@@ -1,6 +1,7 @@
 import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { environment } from '../../../environments/environment';
 
 export interface Evidencia {
   id: number;
@@ -71,7 +72,7 @@ export interface IncidenteDetalle {
 })
 export class IncidenteService {
   private http = inject(HttpClient);
-  private apiUrl = 'http://127.0.0.1:8000/incidentes';
+  private apiUrl = `${environment.apiUrl}/incidentes`;
 
   getSolicitudesPendientes(): Observable<IncidenteDetalle[]> {
     return this.http.get<IncidenteDetalle[]>(`${this.apiUrl}/solicitudes-pendientes`);

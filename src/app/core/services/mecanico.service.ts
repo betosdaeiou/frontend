@@ -1,6 +1,7 @@
 import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { environment } from '../../../environments/environment';
 
 export interface Mecanico {
   id: number;
@@ -37,7 +38,7 @@ export interface MecanicoUpdate {
 })
 export class MecanicoService {
   private http = inject(HttpClient);
-  private apiUrl = 'http://127.0.0.1:8000/mecanicos';
+  private apiUrl = `${environment.apiUrl}/mecanicos`;
 
   getMecanicos(): Observable<Mecanico[]> {
     return this.http.get<Mecanico[]>(this.apiUrl);

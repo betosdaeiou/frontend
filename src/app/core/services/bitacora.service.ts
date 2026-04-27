@@ -1,6 +1,7 @@
 import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { environment } from '../../../environments/environment';
 
 export interface BitacoraEntry {
   id: number;
@@ -17,7 +18,7 @@ export interface BitacoraEntry {
   providedIn: 'root'
 })
 export class BitacoraService {
-  private apiUrl = 'http://127.0.0.1:8000/bitacora';
+  private apiUrl = `${environment.apiUrl}/bitacora`;
   private http = inject(HttpClient);
 
   getEntries(): Observable<BitacoraEntry[]> {

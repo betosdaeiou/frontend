@@ -2,6 +2,7 @@ import { Component, OnInit, OnDestroy, AfterViewChecked, inject } from '@angular
 import { CommonModule } from '@angular/common';
 import { IncidenteService, IncidenteDetalle } from '../../core/services/incidente.service';
 import { ProfileService } from '../../core/services/profile.service';
+import { environment } from '../../../environments/environment';
 import * as L from 'leaflet';
 
 import { FormsModule } from '@angular/forms';
@@ -571,7 +572,7 @@ export class SolicitudesPendientesComponent implements OnInit, OnDestroy, AfterV
       for (const p of parts) {
         const trimmed = p.trim();
         if (trimmed.startsWith('/uploads')) {
-          urls.push('http://127.0.0.1:8000' + trimmed);
+          urls.push(environment.apiUrl + trimmed);
         } else if (trimmed.startsWith('http')) {
           urls.push(trimmed);
         } else if (trimmed.length > 100) {

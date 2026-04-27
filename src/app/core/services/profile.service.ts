@@ -1,6 +1,7 @@
 import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { environment } from '../../../environments/environment';
 
 export interface AdminProfile {
   Usuario: string | null;
@@ -66,7 +67,7 @@ export interface UbicacionPayload {
   providedIn: 'root'
 })
 export class ProfileService {
-  private apiUrl = 'http://127.0.0.1:8000/profile';
+  private apiUrl = `${environment.apiUrl}/profile`;
   private http = inject(HttpClient);
 
   getProfile(): Observable<ProfileData> {
