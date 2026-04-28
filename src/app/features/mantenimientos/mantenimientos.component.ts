@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { IncidenteService, IncidenteDetalle } from '../../core/services/incidente.service';
 import { MecanicoService, Mecanico } from '../../core/services/mecanico.service';
+import { PagoService } from '../../core/services/pago.service';
 import { AuthService } from '../../core/services/auth.service';
 import * as L from 'leaflet';
 
@@ -15,6 +16,7 @@ import * as L from 'leaflet';
 export class MantenimientosComponent implements OnInit, OnDestroy, AfterViewChecked {
   private incidenteService = inject(IncidenteService);
   private mecanicoService = inject(MecanicoService);
+  private pagoService = inject(PagoService);
   private authService = inject(AuthService);
 
   mantenimientos: IncidenteDetalle[] = [];
@@ -22,6 +24,7 @@ export class MantenimientosComponent implements OnInit, OnDestroy, AfterViewChec
   
   isLoading = true;
   isUpdating = false;
+  isConfirmingPago = false;
   error: string | null = null;
   role = this.authService.getRole();
 
@@ -184,5 +187,27 @@ export class MantenimientosComponent implements OnInit, OnDestroy, AfterViewChec
     const fotosStr = incidente.evidencias[0].fotos;
     if (!fotosStr) return [];
     return fotosStr.split('|||').filter(url => url.trim().length > 0);
+  }
+
+  tienePagoPendiente(incidente: IncidenteDetalle): boolean {
+    return incidente.pagos?.some(p => p.estado === 'Pendiente Confirmación' && p.metodo === 'Directo') || false;
+  }
+
+  confirmarPagoDirecto(incidenteId: number): void {
+    if (!confirm('¿Confirmas que recibiste el pago en efectivo/transferencia del conductor?')) return;
+
+    this.isConfirmingPago = true;
+    this.pagoService.confirmarPagoDirecto(incidenteId).subscribe({
+      next: () => {
+        alert('Pago confirmado exitosamente. El incidente ha sido marcado como Pagado.');
+        this.cargarMantenimientos();
+        this.isConfirmingPago = false;
+      },
+      error: (err) => {
+        console.error('Error al confirmar pago:', err);
+        alert(err.error?.detail || 'Hubo un error al confirmar el pago.');
+        this.isConfirmingPago = false;
+      }
+    });
   }
 }

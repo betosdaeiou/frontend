@@ -31,4 +31,8 @@ export class PagoService {
   confirmarPagoStripe(sessionId: string, incidenteId: number): Observable<PagoOut> {
     return this.http.post<PagoOut>(`${this.apiUrl}/success?session_id=${sessionId}&incidente_id=${incidenteId}`, {});
   }
+
+  confirmarPagoDirecto(incidenteId: number): Observable<PagoOut> {
+    return this.http.post<PagoOut>(`${this.apiUrl}/${incidenteId}/confirmar-directo`, {});
+  }
 }

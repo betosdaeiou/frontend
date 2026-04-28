@@ -51,6 +51,15 @@ export interface VehiculoConductorEnIncidente {
   };
 }
 
+export interface PagoEnIncidente {
+  id: number;
+  monto_total: number;
+  metodo: string;
+  estado: string;
+  fecha?: string;
+  incidente_id: number;
+}
+
 export interface IncidenteDetalle {
   id: number;
   coordenadagps?: string;
@@ -65,6 +74,7 @@ export interface IncidenteDetalle {
   distancia_km?: number;
   cotizaciones?: Cotizacion[];
   mecanicos?: any[];
+  pagos?: PagoEnIncidente[];
 }
 
 @Injectable({
