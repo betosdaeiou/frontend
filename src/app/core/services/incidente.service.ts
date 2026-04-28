@@ -140,4 +140,23 @@ export class IncidenteService {
   eliminarServicio(servicioId: number): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/mis-servicios/${servicioId}`);
   }
+
+  // --- Chat ---
+  getChatMessages(incidenteId: number): Observable<MensajeChat[]> {
+    return this.http.get<MensajeChat[]>(`${this.apiUrl}/${incidenteId}/chat`);
+  }
+
+  sendChatMessage(incidenteId: number, contenido: string): Observable<MensajeChat> {
+    return this.http.post<MensajeChat>(`${this.apiUrl}/${incidenteId}/chat`, { contenido });
+  }
+}
+
+export interface MensajeChat {
+  id: number;
+  contenido: string;
+  fecha?: string;
+  incidente_id: number;
+  usuario_id: number;
+  nombre_usuario?: string;
+  rol_usuario?: string;
 }

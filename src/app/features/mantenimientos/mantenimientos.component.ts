@@ -5,12 +5,13 @@ import { IncidenteService, IncidenteDetalle } from '../../core/services/incident
 import { MecanicoService, Mecanico } from '../../core/services/mecanico.service';
 import { PagoService } from '../../core/services/pago.service';
 import { AuthService } from '../../core/services/auth.service';
+import { ChatComponent } from '../chat/chat.component';
 import * as L from 'leaflet';
 
 @Component({
   selector: 'app-mantenimientos',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, ChatComponent],
   templateUrl: './mantenimientos.component.html'
 })
 export class MantenimientosComponent implements OnInit, OnDestroy, AfterViewChecked {
@@ -36,6 +37,9 @@ export class MantenimientosComponent implements OnInit, OnDestroy, AfterViewChec
 
   // Asignacion de multiples mecanicos temporal store
   asignacionesPendientes: { [incidenteId: number]: number[] } = {};
+
+  // Chat modal
+  chatIncidenteId: number | null = null;
 
   ngOnInit(): void {
     this.cargarMantenimientos();
